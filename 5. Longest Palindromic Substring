@@ -1,0 +1,36 @@
+class Solution {
+public:
+string findLongestPalindrome(string s, int x1, int x2) {
+
+	int start = x1;
+	int end = x2;
+
+	if (s[start] != s[end])
+		return s.substr(start, 1);
+
+	while (start >= 0 && end < s.length() && s[start] == s[end]) {
+		start--;
+		end++;
+	}
+
+	return s.substr(start + 1, end - start - 1);
+}
+
+string longestPalindrome(string s) {
+
+	if (s == "")
+		return "";
+
+	string res = s.substr(0, 1);
+
+	for (int i = 0; i < s.length() - 1; i++) {
+
+		string s1 = findLongestPalindrome(s, i, i);
+		res = (s1.length() > res.length()) ? s1 : res;
+
+		string s2 = findLongestPalindrome(s, i, i + 1);
+		res = (s2.length() > res.length()) ? s2 : res;
+	}
+	return res;
+}
+};
