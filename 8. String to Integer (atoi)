@@ -1,0 +1,35 @@
+class Solution {
+public:
+int atoi(string str) {
+	if (str == "")
+		return 0;
+
+	int res = 0;
+	int sign = 1;
+	int cur = 0;
+
+	while (str[cur] == ' ')
+		cur++;
+
+	if (str[cur] == '+')
+		cur++;
+
+	else if (str[cur] == '-') {
+		sign = -1;
+		cur++;
+	}
+
+	for(; cur < str.length(); cur++) {
+		if (str[cur] >= '0' && str[cur] <= '9') {
+
+			if (res > numeric_limits<int>::max() / 10 || ( res == numeric_limits<int>::max() / 10 && (int)(str[cur] - '0') > numeric_limits<int>::max() % 10))
+				return (sign == 1) ? numeric_limits<int>::max() : numeric_limits<int>::min();
+
+			res = res * 10 + (int)(str[cur] - '0');
+		}
+		else
+			break;
+	}
+	return sign * res;
+}
+};
